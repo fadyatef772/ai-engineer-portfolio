@@ -1,0 +1,63 @@
+export const experiences = [
+  {
+    id: 1,
+    role: 'Freelance AI Engineer & Data Scientist',
+    company: 'Self-Employed',
+    type: 'Freelance',
+    period: '2023 – Present',
+    location: 'Remote',
+    description: `Delivering end-to-end AI and data solutions for clients across e-commerce, retail, and
+    media sectors. Projects span NLP systems, ML model development, BI dashboards, and FastAPI deployments.`,
+    responsibilities: [
+      'Developed Arabic NLP pipelines for sentiment and sarcasm detection',
+      'Built AutoML dashboards for non-technical business users',
+      'Deployed ML models as production APIs using FastAPI + Docker',
+      'Created Power BI / Tableau dashboards for KPI monitoring',
+      'Conducted EDA and feature engineering on large tabular datasets',
+    ],
+    tech: ['Python', 'PyTorch', 'FastAPI', 'Docker', 'Power BI', 'PostgreSQL'],
+    color: '#00d4ff',
+    icon: 'freelance',
+  },
+  {
+    id: 2,
+    role: 'AI & Data Science Intern',
+    company: 'Tech Startup (NDA)',
+    type: 'Internship',
+    period: '2022 – 2023',
+    location: 'Egypt',
+    description: `Worked with the data team to build classification models for customer churn prediction,
+    product recommendation, and text classification. Gained hands-on experience with the full ML lifecycle
+    from data collection to deployment.`,
+    responsibilities: [
+      'Built and tuned classification models (XGBoost, Random Forest)',
+      'Performed EDA on 500K+ row customer datasets',
+      'Created weekly automated data reports in Python',
+      'Assisted in deploying first ML model to production via Flask',
+      'Documented model performance and presented findings to stakeholders',
+    ],
+    tech: ['Python', 'Scikit-learn', 'XGBoost', 'Pandas', 'Flask', 'MySQL'],
+    color: '#7c3aed',
+    icon: 'internship',
+  },
+  {
+    id: 3,
+    role: 'Data Analyst',
+    company: 'E-Commerce Business',
+    type: 'Part-time',
+    period: '2021 – 2022',
+    location: 'Egypt',
+    description: `Analyzed sales data and customer behavior patterns to identify growth opportunities.
+    Built Excel and Power BI dashboards used by management for weekly decisions.`,
+    responsibilities: [
+      'Cleaned and processed raw transactional data in Python',
+      'Built Power BI dashboards with 10+ KPI visuals',
+      'Performed customer segmentation using RFM analysis',
+      'Automated monthly reports saving 15+ hours/week',
+      'Identified 3 key growth opportunities through cohort analysis',
+    ],
+    tech: ['Python', 'Excel', 'Power BI', 'SQL', 'Pandas'],
+    color: '#10b981',
+    icon: 'analyst',
+  },
+]
