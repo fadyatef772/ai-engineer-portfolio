@@ -21,6 +21,7 @@ export const personalInfo = {
   github: 'https://github.com/fadyatef772',
   cvUrl: '/cv/fady-atef-cv.pdf',
   profileImage: '/images/profile.png',
+  profileImageFallback: '/images/profile.svg',
   stats: [
     { label: 'Projects Completed', value: 20, suffix: '+' },
     { label: 'ML Models Trained', value: 35, suffix: '+' },

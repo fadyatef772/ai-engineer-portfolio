@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { FaCode, FaBrain, FaChartLine, FaRocket } from 'react-icons/fa'
 import { HiLocationMarker, HiMail } from 'react-icons/hi'
@@ -12,6 +13,46 @@ const highlights = [
   { icon: FaChartLine, label: 'Data-Driven', desc: 'Insights that drive real business decisions', color: '#06b6d4' },
   { icon: FaRocket, label: 'Fast Delivery', desc: 'On-time, documented, production-ready', color: '#10b981' },
 ]
+
+function ProfileImage() {
+  const [src, setSrc] = useState('/images/profile.png')
+  const [failed, setFailed] = useState(false)
+
+  const handleError = () => {
+    if (src === '/images/profile.png') {
+      setSrc('/images/profile.svg')
+    } else {
+      setFailed(true)
+    }
+  }
+
+  if (failed) {
+    return (
+      <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-cyan-500/15 to-purple-600/15">
+        <span
+          className="text-6xl font-bold font-display"
+          style={{
+            background: 'linear-gradient(135deg, #00d4ff, #7c3aed)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+          }}
+        >
+          FA
+        </span>
+        <span className="text-xs text-slate-600 mt-2">Fady Atef Kamal</span>
+      </div>
+    )
+  }
+
+  return (
+    <img
+      src={src}
+      alt="Fady Atef Kamal"
+      className="w-full h-full object-cover object-top"
+      onError={handleError}
+    />
+  )
+}
 
 export default function About() {
   return (
@@ -40,19 +81,7 @@ export default function About() {
 
             {/* Profile image */}
             <div className="absolute inset-6 rounded-full overflow-hidden glass border-2 border-cyan-400/40 shadow-neon-cyan">
-              <img
-                src={personalInfo.profileImage}
-                alt={personalInfo.name}
-                className="w-full h-full object-cover"
-                onError={(e) => {
-                  e.target.style.display = 'none'
-                  e.target.parentElement.innerHTML = `
-                    <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-cyan-500/20 to-purple-600/20">
-                      <span class="text-6xl font-bold gradient-text font-display">FA</span>
-                    </div>
-                  `
-                }}
-              />
+              <ProfileImage />
             </div>
 
             {/* Floating badges */}
