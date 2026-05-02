@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { FaGithub, FaLinkedinIn, FaWhatsapp, FaEnvelope, FaHeart, FaArrowUp } from 'react-icons/fa'
+import { FaGithub, FaLinkedinIn, FaWhatsapp, FaEnvelope, FaHeart, FaArrowUp, FaDownload } from 'react-icons/fa'
 import { scrollToSection } from '../../utils/helpers'
 
 const socials = [
@@ -69,6 +69,18 @@ export default function Footer() {
                   </button>
                 </li>
               ))}
+              <li>
+                <motion.a
+                  href={`${import.meta.env.BASE_URL}cv/FADY-ATEF-KAMAL-DataScientist_Cv.pdf`}
+                  download="Fady-Atef-Kamal-CV.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-sm font-semibold px-4 py-2.5 mt-2 rounded-xl bg-gradient-to-r from-cyan-500/20 to-blue-600/20 border border-cyan-400/30 text-cyan-400 hover:bg-cyan-400/20 hover:border-cyan-400/60 transition-all"
+                  whileHover={{ scale: 1.02, x: 2 }}
+                >
+                  <FaDownload size={11} /> Download My CV
+                </motion.a>
+              </li>
             </ul>
           </div>
 

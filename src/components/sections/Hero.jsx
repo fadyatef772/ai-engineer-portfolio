@@ -108,8 +108,10 @@ export default function Hero() {
             </motion.button>
 
             <motion.a
-              href={personalInfo.cvUrl}
-              download
+              href={`${import.meta.env.BASE_URL}cv/FADY-ATEF-KAMAL-DataScientist_Cv.pdf`}
+              download="Fady-Atef-Kamal-CV.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex items-center gap-2 px-7 py-3.5 glass border border-cyan-400/30 text-cyan-400 font-semibold rounded-xl hover:bg-cyan-400/10 hover:border-cyan-400 transition-all text-sm"
               whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.97 }}
