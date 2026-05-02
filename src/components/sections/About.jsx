@@ -15,12 +15,13 @@ const highlights = [
 ]
 
 function ProfileImage() {
-  const [src, setSrc] = useState('/images/profile.png')
+  const base = import.meta.env.BASE_URL
+  const [src, setSrc] = useState(`${base}images/profile.png`)
   const [failed, setFailed] = useState(false)
 
   const handleError = () => {
-    if (src === '/images/profile.png') {
-      setSrc('/images/profile.svg')
+    if (src.endsWith('profile.png')) {
+      setSrc(`${base}images/profile.svg`)
     } else {
       setFailed(true)
     }
