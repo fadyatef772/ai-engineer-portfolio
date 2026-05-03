@@ -85,10 +85,10 @@ export default function Hero() {
           >
             {personalInfo.stats.map((stat) => (
               <div key={stat.label} className="flex flex-col">
-                <span className="text-2xl font-bold font-display gradient-text">
+                <span className="text-2xl font-extrabold font-display text-white drop-shadow-[0_0_12px_rgba(34,211,238,0.65)]">
                   {stat.value}{stat.suffix}
                 </span>
-                <span className="text-xs text-slate-500">{stat.label}</span>
+                <span className="text-xs text-cyan-300 font-medium tracking-wide">{stat.label}</span>
               </div>
             ))}
           </motion.div>
