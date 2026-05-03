@@ -28,7 +28,7 @@ export default function Projects() {
 
       {/* Filter tabs */}
       <motion.div
-        className="flex flex-wrap justify-center gap-2 mb-12"
+        className="flex flex-wrap justify-center gap-2 mb-10 md:mb-12"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
@@ -52,7 +52,7 @@ export default function Projects() {
       <AnimatePresence mode="wait">
         <motion.div
           key={activeFilter}
-          className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"
+          className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -180,7 +180,7 @@ export default function Projects() {
 
       {/* View all CTA */}
       <motion.div
-        className="text-center mt-12"
+        className="text-center mt-12 md:mt-16"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}

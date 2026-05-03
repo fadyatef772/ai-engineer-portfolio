@@ -22,7 +22,7 @@ export default function Experience() {
         {experiences.map((exp, i) => (
           <motion.div
             key={exp.id}
-            className={`relative flex items-start gap-8 mb-12 ${
+            className={`relative flex items-start gap-8 mb-12 md:mb-16 last:mb-0 ${
               i % 2 === 0 ? 'sm:flex-row' : 'sm:flex-row-reverse'
             }`}
             initial={{ opacity: 0, x: i % 2 === 0 ? -40 : 40 }}

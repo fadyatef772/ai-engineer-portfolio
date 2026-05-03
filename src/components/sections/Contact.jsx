@@ -54,7 +54,7 @@ export default function Contact() {
         subtitle="Have a project in mind? Let's discuss how AI and data science can solve your challenge."
       />
 
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 max-w-6xl mx-auto">
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-14 max-w-6xl mx-auto">
         {/* Left: Info */}
         <motion.div
           className="lg:col-span-2 space-y-6"

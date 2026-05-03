@@ -45,7 +45,7 @@ export default function Skills() {
 
       {/* Category filter tabs */}
       <motion.div
-        className="flex flex-wrap justify-center gap-2 mb-12"
+        className="flex flex-wrap justify-center gap-2 mb-10 md:mb-12"
         variants={ANIMATION_VARIANTS.staggerContainer}
         initial="hidden"
         whileInView="visible"
@@ -85,7 +85,7 @@ export default function Skills() {
       <AnimatePresence mode="wait">
         <motion.div
           key={activeCategory}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}

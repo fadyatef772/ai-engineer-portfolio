@@ -5,7 +5,7 @@ export default function SectionTitle({ label, title, highlight, subtitle, align 
 
   return (
     <motion.div
-      className={`flex flex-col gap-3 mb-16 ${alignClass}`}
+      className={`flex flex-col gap-3 mb-12 md:mb-16 ${alignClass}`}
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}

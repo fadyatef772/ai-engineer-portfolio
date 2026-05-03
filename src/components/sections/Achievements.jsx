@@ -64,7 +64,7 @@ export default function Achievements() {
         subtitle="Metrics that reflect real work, real impact, and continuous growth."
       />
 
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-5">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-5 md:gap-6 lg:gap-8">
         {achievements.map((item, i) => (
           <AchievementCard key={item.id} item={item} index={i} />
         ))}

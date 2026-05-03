@@ -19,7 +19,7 @@ export default function Blog() {
         subtitle="Writing about AI, machine learning, data science, and building real-world intelligent systems."
       />
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
         {/* Featured post */}
         <motion.article
           className="lg:col-span-2 glass rounded-2xl overflow-hidden border border-white/5 hover:border-white/10 transition-all group"

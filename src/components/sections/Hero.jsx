@@ -8,19 +8,21 @@ import { personalInfo } from '../../data/personal'
 
 export default function Hero() {
   return (
-    <section id="hero" className="relative min-h-screen flex items-center overflow-hidden bg-dark">
+    <section id="hero" className="relative min-h-screen flex items-center overflow-hidden bg-dark scroll-mt-24 pb-24 md:pb-32">
       {/* 3D Canvas Background */}
-      <HeroCanvas />
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <HeroCanvas />
+      </div>
 
       {/* Dark gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-dark/90 via-dark/60 to-transparent pointer-events-none" />
-      <div className="absolute inset-0 bg-gradient-to-t from-dark via-transparent to-transparent pointer-events-none" />
+      <div className="absolute inset-0 z-[1] bg-gradient-to-r from-dark/90 via-dark/60 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 z-[1] bg-gradient-to-t from-dark via-transparent to-transparent pointer-events-none" />
 
       {/* Scan line effect */}
-      <div className="scan-line" />
+      <div className="scan-line z-[1]" />
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-8">
         <div className="max-w-3xl">
 
           {/* Status badge */}
@@ -161,7 +163,7 @@ export default function Hero() {
       {/* Scroll indicator */}
       <motion.button
         onClick={() => scrollToSection('about')}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-500 hover:text-cyan-400 transition-colors"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-slate-500 hover:text-cyan-400 transition-colors"
         animate={{ y: [0, 8, 0] }}
         transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
       >

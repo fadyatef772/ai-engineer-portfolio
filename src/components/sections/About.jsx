@@ -85,9 +85,9 @@ export default function About() {
               <ProfileImage />
             </div>
 
-            {/* Floating badges */}
+            {/* Floating badges — hidden on small screens to prevent overlap */}
             <motion.div
-              className="absolute -right-4 top-8 glass rounded-xl px-3 py-2 border border-cyan-400/20 shadow-neon-cyan"
+              className="hidden md:block absolute -right-4 top-8 glass rounded-xl px-3 py-2 border border-cyan-400/20 shadow-neon-cyan"
               animate={{ y: [0, -8, 0] }}
               transition={{ duration: 3, repeat: Infinity }}
             >
@@ -98,7 +98,7 @@ export default function About() {
             </motion.div>
 
             <motion.div
-              className="absolute -left-4 bottom-12 glass rounded-xl px-3 py-2 border border-purple-500/20"
+              className="hidden md:block absolute -left-4 bottom-12 glass rounded-xl px-3 py-2 border border-purple-500/20"
               animate={{ y: [0, 8, 0] }}
               transition={{ duration: 4, repeat: Infinity }}
             >

@@ -20,7 +20,7 @@ export default function Services() {
         subtitle="End-to-end AI and data science services — from raw data to production-ready intelligent systems."
       />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
         {services.map((service, i) => {
           const Icon = iconMap[service.icon] || FaBrain
           return (
@@ -79,7 +79,7 @@ export default function Services() {
 
       {/* CTA banner */}
       <motion.div
-        className="mt-12 glass rounded-2xl p-8 border border-cyan-400/20 text-center relative overflow-hidden"
+        className="mt-12 md:mt-16 glass rounded-2xl p-8 border border-cyan-400/20 text-center relative overflow-hidden"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}

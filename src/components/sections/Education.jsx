@@ -15,7 +15,7 @@ export default function Education() {
         subtitle="Strong theoretical foundation combined with practical online learning and certifications."
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto">
         {education.map((edu, i) => (
           <motion.div
             key={edu.id}

@@ -109,9 +109,17 @@ body {
   opacity: 1;
 }
 
-/* Section padding */
+/* Section padding — kept as fallback; primary spacing is handled via Tailwind in SectionWrapper */
 .section-padding {
-  padding: 8rem 0;
+  padding: 6rem 0;
+}
+
+@media (min-width: 768px) {
+  .section-padding { padding: 8rem 0; }
+}
+
+@media (min-width: 1024px) {
+  .section-padding { padding: 9rem 0; }
 }
 
 /* Background grid */

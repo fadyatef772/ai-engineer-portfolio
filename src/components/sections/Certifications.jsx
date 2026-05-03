@@ -15,7 +15,7 @@ export default function Certifications() {
         subtitle="Professional credentials from DeepLearning.AI, NVIDIA, ALX, Coursera, and Udemy validating real expertise."
       />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
         {certifications.map((cert, i) => (
           <motion.div
             key={cert.id}
