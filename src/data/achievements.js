@@ -4,7 +4,7 @@ export const achievements = [
   { id: 3, value: 50, suffix: '+', label: 'Datasets Analyzed', icon: 'database', color: '#06b6d4', description: 'From 10K to 1M+ row datasets' },
   { id: 4, value: 10, suffix: '+', label: 'APIs Deployed', icon: 'server', color: '#10b981', description: 'FastAPI & Flask production APIs' },
   { id: 5, value: 15, suffix: '+', label: 'Dashboards Created', icon: 'chart', color: '#f59e0b', description: 'Power BI, Tableau & Plotly dashboards' },
-  { id: 6, value: 8, suffix: '+', label: 'Certifications', icon: 'award', color: '#ef4444', description: 'From Google, IBM, DeepLearning.AI' },
+  { id: 6, value: 8, suffix: '+', label: 'Certifications', icon: 'award', color: '#ef4444', description: 'From AWS, Stanford, DeepLearning.AI' },
   { id: 7, value: 5, suffix: '+', label: 'Happy Clients', icon: 'smile', color: '#8b5cf6', description: 'Freelance clients across industries' },
   { id: 8, value: 89, suffix: '%', label: 'Model Accuracy', icon: 'target', color: '#ec4899', description: 'Best achieved on Arabic NLP task' },
 ]

@@ -47,7 +47,7 @@ export default function Experience() {
         index="04"
         title="Experience"
         kicker="Where I've worked"
-        aside="A path through global tech, digital agencies, and hands-on data systems — IBM and Velir included."
+        aside="A path through AI product teams, digital agencies, and hands-on data systems — INZOX and Velir included."
       />
 
       {/* Experience timeline */}

@@ -9,7 +9,7 @@ const FACTS = [
   { k: 'Based in', v: 'Cairo, Egypt' },
   { k: 'Foundation', v: 'BSc Computer Science — Software Engineering, ACU' },
   { k: 'Specialization', v: 'PG Diploma, Data Science & AI — Digilians (NTI + Military Academy)' },
-  { k: 'Experience', v: 'IBM · Velir · M Squared · Art Vision' },
+  { k: 'Experience', v: 'INZOX · Velir · M Squared · Art Vision' },
 ]
 
 export default function About() {
@@ -69,8 +69,8 @@ export default function About() {
             </Reveal>
             <Reveal delay={0.1}>
               <p>
-                I&apos;ve worked across global tech and digital-strategy teams including IBM and Velir,
-                building predictive machine-learning models, running advanced statistical analysis, and
+                I&apos;ve worked across AI product teams and digital-strategy agencies including INZOX and
+                Velir, building predictive machine-learning models, running advanced statistical analysis, and
                 managing the full data lifecycle — including cleaning complex datasets of over 10,000
                 records. I care most about practical AI: models that get deployed, measured, and used.
               </p>
