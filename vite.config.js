@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react'
 import path from 'path'
 
 export default defineConfig({
+  // Deployed as a GitHub Pages project site; keep this base to preserve existing deploy path.
   base: '/ai-engineer-portfolio/',
 
   plugins: [react()],
@@ -12,11 +13,10 @@ export default defineConfig({
     },
   },
   build: {
-    chunkSizeWarningLimit: 2000,
+    chunkSizeWarningLimit: 1200,
     rollupOptions: {
       output: {
         manualChunks: {
-          three: ['three', '@react-three/fiber', '@react-three/drei'],
           framer: ['framer-motion'],
           vendor: ['react', 'react-dom'],
         },

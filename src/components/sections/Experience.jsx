@@ -1,101 +1,94 @@
-import { motion } from 'framer-motion'
-import { HiBriefcase, HiLocationMarker, HiCalendar } from 'react-icons/hi'
-import SectionWrapper from '../layout/SectionWrapper'
-import SectionTitle from '../ui/SectionTitle'
-import Badge from '../ui/Badge'
+import SectionHeader from '../ui/SectionHeader'
+import { Reveal, Stagger, StaggerItem } from '../ui/motion'
 import { experiences } from '../../data/experience'
+import { education } from '../../data/education'
+
+function Role({ exp }) {
+  return (
+    <div className="group grid gap-4 py-8 transition-colors sm:grid-cols-[0.8fr_2fr] sm:gap-10">
+      {/* Left: period + company */}
+      <div>
+        <p className="font-mono text-[12px] text-accent">{exp.period}</p>
+        <p className="mt-2 font-display text-lg text-bone">{exp.company}</p>
+        <p className="mt-1 text-[12px] text-bone-faint">
+          {exp.type} · {exp.location}
+        </p>
+      </div>
+      {/* Right: role + detail */}
+      <div>
+        <h4 className="font-display text-xl text-bone transition-colors group-hover:text-accent-bright">
+          {exp.role}
+        </h4>
+        <p className="mt-3 max-w-2xl text-[14px] leading-relaxed text-bone-dim">{exp.description}</p>
+        <ul className="mt-4 grid gap-1.5">
+          {exp.responsibilities.slice(0, 3).map((r) => (
+            <li key={r} className="flex gap-2.5 text-[13px] text-bone-dim/90">
+              <span className="mt-[7px] h-1 w-1 shrink-0 rounded-full bg-accent" />
+              {r}
+            </li>
+          ))}
+        </ul>
+        <div className="mt-4 flex flex-wrap gap-2">
+          {exp.tech.map((t) => (
+            <span key={t} className="chip">
+              {t}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
 
 export default function Experience() {
   return (
-    <SectionWrapper id="experience">
-      <SectionTitle
-        label="Work History"
-        title="My"
-        highlight="Experience"
-        subtitle="Building real AI solutions across freelance, internship, and data analysis roles."
+    <section id="experience" className="shell scroll-mt-24 py-24 sm:py-32">
+      <SectionHeader
+        index="04"
+        title="Experience"
+        kicker="Where I've worked"
+        aside="A path through global tech, digital agencies, and hands-on data systems — IBM and Velir included."
       />
 
-      <div className="relative max-w-4xl mx-auto">
-        {/* Timeline line */}
-        <div className="absolute left-6 sm:left-1/2 sm:-translate-x-px top-0 bottom-0 w-px bg-gradient-to-b from-cyan-400/50 via-purple-500/30 to-transparent" />
+      {/* Experience timeline */}
+      <Reveal>
+        <div className="divide-y divide-line border-y border-line">
+          {experiences.map((e) => (
+            <Role key={e.id} exp={e} />
+          ))}
+        </div>
+      </Reveal>
 
-        {experiences.map((exp, i) => (
-          <motion.div
-            key={exp.id}
-            className={`relative flex items-start gap-8 mb-12 md:mb-16 last:mb-0 ${
-              i % 2 === 0 ? 'sm:flex-row' : 'sm:flex-row-reverse'
-            }`}
-            initial={{ opacity: 0, x: i % 2 === 0 ? -40 : 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: i * 0.1 }}
-          >
-            {/* Timeline dot */}
-            <div className="absolute left-6 sm:left-1/2 sm:-translate-x-1/2 -translate-y-1 mt-6">
-              <div
-                className="w-4 h-4 rounded-full border-2 border-dark-2 shadow-neon-cyan"
-                style={{ backgroundColor: exp.color }}
-              />
-              <div
-                className="absolute inset-0 rounded-full animate-ping opacity-40"
-                style={{ backgroundColor: exp.color }}
-              />
-            </div>
-
-            {/* Spacer for timeline */}
-            <div className="hidden sm:block w-1/2" />
-
-            {/* Card */}
-            <div className="ml-14 sm:ml-0 sm:w-1/2 sm:px-8">
-              <motion.div
-                className="glass rounded-2xl p-6 border border-white/5 hover:border-white/10 transition-all"
-                whileHover={{ y: -4 }}
-                style={{ borderLeft: `3px solid ${exp.color}` }}
-              >
-                {/* Header */}
-                <div className="flex items-start justify-between gap-4 mb-3">
-                  <div>
-                    <h3 className="text-white font-bold text-base">{exp.role}</h3>
-                    <p className="font-semibold text-sm mt-0.5" style={{ color: exp.color }}>
-                      {exp.company}
-                    </p>
-                  </div>
-                  <Badge color={exp.color} size="xs">{exp.type}</Badge>
-                </div>
-
-                {/* Meta */}
-                <div className="flex flex-wrap gap-4 mb-4 text-xs text-slate-500">
-                  <span className="flex items-center gap-1">
-                    <HiCalendar /> {exp.period}
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <HiLocationMarker /> {exp.location}
-                  </span>
-                </div>
-
-                <p className="text-slate-400 text-sm leading-relaxed mb-4">{exp.description}</p>
-
-                {/* Responsibilities */}
-                <ul className="space-y-1.5 mb-4">
-                  {exp.responsibilities.map((r) => (
-                    <li key={r} className="flex items-start gap-2 text-xs text-slate-400">
-                      <span className="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style={{ backgroundColor: exp.color }} />
-                      {r}
-                    </li>
-                  ))}
-                </ul>
-
-                {/* Tech */}
-                <div className="flex flex-wrap gap-1.5 pt-3 border-t border-white/5">
-                  {exp.tech.map((t) => (
-                    <Badge key={t} color={exp.color} size="xs">{t}</Badge>
+      {/* Education */}
+      <div className="mt-24">
+        <Reveal>
+          <div className="mb-10 flex items-center gap-4">
+            <span className="u-label">Education</span>
+            <span className="hair" />
+          </div>
+        </Reveal>
+        <Stagger className="grid gap-5 md:grid-cols-2">
+          {education.map((ed) => (
+            <StaggerItem key={ed.id}>
+              <div className="h-full rounded-xl border border-line bg-surface/50 p-6 sm:p-8">
+                <p className="font-mono text-[12px] text-accent">{ed.period}</p>
+                <h4 className="mt-3 font-display text-xl text-bone">{ed.field}</h4>
+                <p className="mt-1 text-sm text-bone-dim">{ed.degree} · {ed.institution}</p>
+                <p className="mt-4 text-[13px] leading-relaxed text-bone-dim/90">{ed.description}</p>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {ed.courses.slice(0, 5).map((c) => (
+                    <span key={c} className="chip">
+                      {c}
+                    </span>
                   ))}
                 </div>
-              </motion.div>
-            </div>
-          </motion.div>
-        ))}
+              </div>
+            </StaggerItem>
+          ))}
+        </Stagger>
       </div>
-    </SectionWrapper>
+
+      {/* Certifications now live in their own immersive gallery section (#certificates). */}
+    </section>
   )
 }

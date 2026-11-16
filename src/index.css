@@ -1,5 +1,191 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import './styles/globals.css';
-@import './styles/animations.css';
+
+:root {
+  --bg: #07070a;
+  --surface: #0e0e13;
+  --bone: #ede9e0;
+  --bone-dim: #a7a399;
+  --accent: #3d5afe;
+  --accent-bright: #6b80ff;
+  --ease-swift: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  * {
+    @apply border-line;
+  }
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: auto; /* Lenis handles smooth scroll */
+  }
+  body {
+    @apply bg-bg text-bone font-sans antialiased;
+    overflow-x: hidden;
+    font-feature-settings: 'ss01', 'cv01', 'cv11';
+  }
+  ::selection {
+    background: var(--accent);
+    color: #fff;
+  }
+  /* Thin, quiet scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--bg);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #26262f;
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #34343f;
+  }
+}
+
+@layer components {
+  /* ---- Layout shell ---- */
+  .shell {
+    @apply mx-auto w-full max-w-shell px-6 sm:px-10 lg:px-16;
+  }
+
+  /* ---- Mono eyebrow label ---- */
+  .u-label {
+    @apply font-mono text-[11px] uppercase tracking-label text-bone-dim;
+  }
+
+  /* ---- Fluid display type ---- */
+  .display {
+    @apply font-display font-medium leading-[0.92] tracking-tightest;
+  }
+
+  /* ---- Line-mask reveal: wrap a block, child translates up ---- */
+  .mask {
+    overflow: hidden;
+    display: block;
+  }
+
+  /* ---- Buttons ---- */
+  .btn {
+    @apply relative inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5
+      font-mono text-[12px] uppercase tracking-[0.14em] transition-colors duration-500;
+  }
+  .btn-primary {
+    @apply bg-bone text-bg hover:bg-accent hover:text-white;
+  }
+  .btn-ghost {
+    @apply border border-line-strong text-bone hover:border-bone hover:bg-bone/5;
+  }
+
+  /* ---- Hairline divider ---- */
+  .hair {
+    @apply h-px w-full bg-line;
+  }
+
+  /* ---- Tag chip (tech) ---- */
+  .chip {
+    @apply inline-flex items-center rounded-full border border-line px-3 py-1
+      font-mono text-[11px] tracking-wide text-bone-dim transition-colors duration-300;
+  }
+  .group:hover .chip,
+  .chip:hover {
+    @apply border-line-strong text-bone;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+  /* Subtle film grain for premium texture */
+  .grain::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .accent-link {
+    background-image: linear-gradient(var(--accent), var(--accent));
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.5s var(--ease-swift);
+  }
+  .accent-link:hover {
+    background-size: 100% 1px;
+  }
+}
+
+/* ---- Custom cursor (desktop, fine-pointer only) ---- */
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  border-radius: 9999px;
+  mix-blend-mode: difference;
+  will-change: transform;
+}
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  background: #fff;
+  margin: -3px 0 0 -3px;
+}
+.cursor-ring {
+  width: 40px;
+  height: 40px;
+  margin: -20px 0 0 -20px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  transition: width 0.3s var(--ease-swift), height 0.3s var(--ease-swift),
+    margin 0.3s var(--ease-swift), background 0.3s var(--ease-swift);
+}
+.cursor-ring[data-variant='hover'] {
+  width: 68px;
+  height: 68px;
+  margin: -34px 0 0 -34px;
+  background: rgba(255, 255, 255, 0.1);
+}
+.cursor-ring[data-variant='view'] {
+  width: 92px;
+  height: 92px;
+  margin: -46px 0 0 -46px;
+  background: var(--accent);
+  border-color: transparent;
+  mix-blend-mode: normal;
+}
+@media (hover: hover) and (pointer: fine) {
+  .has-custom-cursor,
+  .has-custom-cursor * {
+    cursor: none;
+  }
+}
+
+/* ---- Reduced motion: strip transforms/animation, keep content legible ---- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .cursor-dot,
+  .cursor-ring {
+    display: none !important;
+  }
+}

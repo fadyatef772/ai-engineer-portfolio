@@ -1,175 +1,167 @@
-import { motion } from 'framer-motion'
-import { TypeAnimation } from 'react-type-animation'
-import { FaGithub, FaLinkedinIn, FaWhatsapp, FaDownload, FaArrowRight } from 'react-icons/fa'
-import { HiChevronDown } from 'react-icons/hi'
-import HeroCanvas from '../3d/HeroCanvas'
-import { scrollToSection } from '../../utils/helpers'
+import { useEffect, useState } from 'react'
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
+import { FiArrowDownRight, FiArrowUpRight, FiDownload } from 'react-icons/fi'
+import NeuralField from '../visual/NeuralField'
+import { Magnetic } from '../ui/motion'
+import { scrollToId } from '../../lib/scroll'
+import { asset } from '../../lib/asset'
 import { personalInfo } from '../../data/personal'
 
-export default function Hero() {
+const ROTATING = ['Machine Learning', 'Deep Learning', 'NLP & Arabic AI', 'Computer Vision', 'Data Science']
+const EASE = [0.22, 1, 0.36, 1]
+const INTRO_DELAY = 1.25 // plays in as the loader lifts
+
+function Line({ children, delay }) {
+  const reduce = useReducedMotion()
   return (
-    <section id="hero" className="relative min-h-screen flex items-center overflow-hidden bg-dark scroll-mt-24 pb-24 md:pb-32">
-      {/* 3D Canvas Background */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <HeroCanvas />
+    <span className="mask">
+      <motion.span
+        className="block"
+        initial={reduce ? false : { y: '115%' }}
+        animate={{ y: 0 }}
+        transition={{ duration: 1, ease: EASE, delay: reduce ? 0 : delay }}
+      >
+        {children}
+      </motion.span>
+    </span>
+  )
+}
+
+export default function Hero() {
+  const reduce = useReducedMotion()
+  const [idx, setIdx] = useState(0)
+
+  useEffect(() => {
+    if (reduce) return
+    const t = setInterval(() => setIdx((i) => (i + 1) % ROTATING.length), 2200)
+    return () => clearInterval(t)
+  }, [reduce])
+
+  return (
+    <section id="hero" className="relative flex min-h-[100svh] flex-col overflow-hidden">
+      {/* Signature neural field */}
+      <div className="pointer-events-none absolute inset-0 opacity-90">
+        <NeuralField className="h-full w-full" />
       </div>
+      {/* Contrast wash so headline stays legible over the field */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-bg via-bg/70 to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-bg to-transparent" />
 
-      {/* Dark gradient overlay */}
-      <div className="absolute inset-0 z-[1] bg-gradient-to-r from-dark/90 via-dark/60 to-transparent pointer-events-none" />
-      <div className="absolute inset-0 z-[1] bg-gradient-to-t from-dark via-transparent to-transparent pointer-events-none" />
+      <div className="shell relative z-10 flex flex-1 flex-col justify-center pt-28 pb-16">
+        {/* Eyebrow row */}
+        <motion.div
+          className="mb-10 flex flex-wrap items-center justify-between gap-y-3"
+          initial={reduce ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: INTRO_DELAY - 0.2 }}
+        >
+          <div className="flex items-center gap-3">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
+            </span>
+            <span className="u-label text-bone">Available for AI &amp; ML roles</span>
+          </div>
+          <span className="u-label">{personalInfo.location.split(',').slice(-2).join(',').trim()} · UTC+2</span>
+        </motion.div>
 
-      {/* Scan line effect */}
-      <div className="scan-line z-[1]" />
+        {/* Name */}
+        <h1 className="display text-bone text-[clamp(2.75rem,11vw,10.5rem)]">
+          <Line delay={INTRO_DELAY}>Fady Atef</Line>
+          <Line delay={INTRO_DELAY + 0.1}>Kamal</Line>
+        </h1>
 
-      {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-8">
-        <div className="max-w-3xl">
-
-          {/* Status badge */}
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="inline-flex items-center gap-2.5 px-4 py-2 glass rounded-full border border-green-500/30 mb-8"
-          >
-            <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-            <span className="text-green-400 text-sm font-medium">Available for Projects</span>
-            <span className="text-slate-500 text-xs">· Egypt</span>
-          </motion.div>
-
-          {/* Headline */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.3 }}
-          >
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold font-display leading-[1.1] text-white mb-4">
-              Hi, I'm{' '}
-              <span className="gradient-text">{personalInfo.name}</span>
-            </h1>
-            <div className="text-2xl sm:text-3xl lg:text-4xl font-bold font-display text-slate-300 mb-6 h-12 flex items-center">
-              <TypeAnimation
-                sequence={[
-                  'AI Engineer', 2000,
-                  'Data Scientist', 2000,
-                  'ML Developer', 2000,
-                  'NLP Specialist', 2000,
-                  'Problem Solver', 2000,
-                ]}
-                wrapper="span"
-                repeat={Infinity}
-                className="text-cyan-400"
-              />
+        {/* Role + rotating specialty */}
+        <motion.div
+          className="mt-6 flex flex-col gap-4 sm:mt-8 sm:flex-row sm:items-end sm:justify-between"
+          initial={reduce ? false : { opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, ease: EASE, delay: INTRO_DELAY + 0.35 }}
+        >
+          <div className="flex items-baseline gap-3">
+            <span className="display text-[clamp(1.5rem,4.5vw,3.25rem)] text-accent">AI Engineer</span>
+          </div>
+          <div className="flex items-center gap-3">
+            <span className="u-label">Focus</span>
+            <div className="relative h-7 min-w-[190px] overflow-hidden">
+              <AnimatePresence mode="wait">
+                <motion.span
+                  key={idx}
+                  className="absolute inset-0 font-mono text-sm text-bone"
+                  initial={reduce ? false : { y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={reduce ? {} : { y: -20, opacity: 0 }}
+                  transition={{ duration: 0.4, ease: EASE }}
+                >
+                  {ROTATING[idx]}
+                </motion.span>
+              </AnimatePresence>
             </div>
-          </motion.div>
+          </div>
+        </motion.div>
 
-          {/* Description */}
+        <div className="mt-12 grid gap-10 border-t border-line pt-10 md:grid-cols-[1.2fr_1fr] md:items-end">
+          {/* Intro */}
           <motion.p
-            className="text-slate-400 text-lg leading-relaxed mb-10 max-w-2xl"
-            initial={{ opacity: 0, y: 20 }}
+            className="max-w-xl text-pretty text-[15px] leading-relaxed text-bone-dim sm:text-base"
+            initial={reduce ? false : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.5 }}
+            transition={{ duration: 0.9, ease: EASE, delay: INTRO_DELAY + 0.5 }}
           >
-            {personalInfo.tagline}. I specialize in building{' '}
-            <span className="text-cyan-400 font-medium">machine learning models</span>,{' '}
-            <span className="text-purple-400 font-medium">NLP systems</span>, and{' '}
-            <span className="text-cyan-300 font-medium">production AI APIs</span> that solve real business problems.
+            I build real-world AI — from raw data and trained models to deployed APIs. My work spans
+            machine learning, deep learning, and NLP (with a focus on Arabic), turning complex,
+            messy problems into intelligent systems that ship.
           </motion.p>
 
-          {/* Stats row */}
+          {/* CTAs */}
           <motion.div
-            className="flex flex-wrap gap-6 mb-10"
-            initial={{ opacity: 0, y: 20 }}
+            className="flex flex-wrap items-center gap-3 md:justify-end"
+            initial={reduce ? false : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.6 }}
+            transition={{ duration: 0.9, ease: EASE, delay: INTRO_DELAY + 0.6 }}
           >
-            {personalInfo.stats.map((stat) => (
-              <div key={stat.label} className="flex flex-col">
-                <span className="text-2xl font-extrabold font-display text-white drop-shadow-[0_0_12px_rgba(34,211,238,0.65)]">
-                  {stat.value}{stat.suffix}
-                </span>
-                <span className="text-xs text-cyan-300 font-medium tracking-wide">{stat.label}</span>
-              </div>
-            ))}
-          </motion.div>
-
-          {/* CTA Buttons */}
-          <motion.div
-            className="flex flex-wrap gap-4 mb-12"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.7 }}
-          >
-            <motion.button
-              onClick={() => scrollToSection('projects')}
-              className="flex items-center gap-2 px-7 py-3.5 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold rounded-xl shadow-neon-cyan hover:shadow-neon-strong transition-all text-sm"
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.97 }}
-            >
-              View Projects <FaArrowRight size={13} />
-            </motion.button>
-
-            <motion.a
-              href={`${import.meta.env.BASE_URL}cv/FADY-ATEF-KAMAL-DataScientist_Cv.pdf`}
-              download="Fady-Atef-Kamal-CV.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-7 py-3.5 glass border border-cyan-400/30 text-cyan-400 font-semibold rounded-xl hover:bg-cyan-400/10 hover:border-cyan-400 transition-all text-sm"
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.97 }}
-            >
-              <FaDownload size={13} /> Download CV
-            </motion.a>
-
-            <motion.button
-              onClick={() => scrollToSection('contact')}
-              className="flex items-center gap-2 px-7 py-3.5 glass border border-white/10 text-slate-300 font-semibold rounded-xl hover:bg-white/5 hover:text-white transition-all text-sm"
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.97 }}
-            >
-              Contact Me
-            </motion.button>
-          </motion.div>
-
-          {/* Social links */}
-          <motion.div
-            className="flex items-center gap-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.7, delay: 0.9 }}
-          >
-            <span className="text-xs text-slate-600 uppercase tracking-widest font-mono">Find me on</span>
-            {[
-              { icon: FaGithub, href: personalInfo.github, label: 'GitHub' },
-              { icon: FaLinkedinIn, href: personalInfo.linkedin, label: 'LinkedIn' },
-              { icon: FaWhatsapp, href: `https://wa.me/${personalInfo.whatsapp}`, label: 'WhatsApp' },
-            ].map(({ icon: Icon, href, label }) => (
-              <motion.a
-                key={label}
-                href={href}
+            <Magnetic>
+              <button onClick={() => scrollToId('work')} data-cursor="hover" className="btn btn-primary">
+                View work <FiArrowDownRight className="text-sm" />
+              </button>
+            </Magnetic>
+            <Magnetic>
+              <button onClick={() => scrollToId('contact')} data-cursor="hover" className="btn btn-ghost">
+                Get in touch <FiArrowUpRight className="text-sm" />
+              </button>
+            </Magnetic>
+            <Magnetic>
+              <a
+                href={asset(personalInfo.cvUrl)}
                 target="_blank"
-                rel="noopener noreferrer"
-                aria-label={label}
-                className="w-9 h-9 glass rounded-lg flex items-center justify-center text-slate-400 hover:text-cyan-400 border border-white/5 hover:border-cyan-400/30 transition-all"
-                whileHover={{ scale: 1.1, y: -2 }}
+                rel="noreferrer"
+                download
+                data-cursor="hover"
+                className="btn btn-ghost"
               >
-                <Icon size={15} />
-              </motion.a>
-            ))}
+                Download CV <FiDownload className="text-sm" />
+              </a>
+            </Magnetic>
           </motion.div>
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <motion.button
-        onClick={() => scrollToSection('about')}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-slate-500 hover:text-cyan-400 transition-colors"
-        animate={{ y: [0, 8, 0] }}
-        transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
-      >
-        <span className="text-xs font-mono tracking-widest uppercase">Scroll</span>
-        <HiChevronDown size={20} />
-      </motion.button>
+      {/* Bottom tech marquee */}
+      <div className="relative z-10 overflow-hidden border-t border-line py-3">
+        <div className="flex w-max animate-marquee gap-10 whitespace-nowrap will-change-transform">
+          {Array.from({ length: 2 }).map((_, k) => (
+            <div key={k} className="flex gap-10" aria-hidden={k === 1}>
+              {['Python', 'FastAPI', 'PyTorch', 'TensorFlow', 'Scikit-learn', 'Transformers', 'Docker', 'Arabic NLP', 'Power BI', 'SQL'].map(
+                (t) => (
+                  <span key={t} className="font-mono text-[11px] uppercase tracking-[0.15em] text-bone-faint">
+                    {t} <span className="text-accent">✦</span>
+                  </span>
+                )
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
     </section>
   )
 }

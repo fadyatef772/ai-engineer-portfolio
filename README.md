@@ -1,99 +1,73 @@
 # Fady Atef Kamal — AI Engineer Portfolio
 
-A professional 3D animated portfolio website built with React, Vite, Tailwind CSS, Framer Motion, and React Three Fiber.
+A premium, editorial, motion-driven portfolio for an AI Engineer. Dark canvas,
+oversized display typography, a signature interactive **neural field**, custom
+cursor, smooth inertia scroll, and masked scroll-reveals — all accessible and
+`prefers-reduced-motion` aware.
 
-## Features
-
-- 3D neural network hero with React Three Fiber
-- Glassmorphism dark UI with neon cyan & purple accents
-- Framer Motion scroll animations throughout
-- Fully responsive (mobile, tablet, desktop)
-- 12 complete sections: Hero, About, Skills, Projects, Experience, Education, Certifications, Services, Achievements, Testimonials, Blog, Contact
-- All content separated into `/src/data` files for easy editing
-
-## Tech Stack
+## Tech stack
 
 | Tool | Purpose |
 |------|---------|
-| React 18 + Vite | Framework & build tool |
-| Tailwind CSS | Utility-first styling |
-| Framer Motion | Animations |
-| React Three Fiber + Drei | 3D WebGL canvas |
-| Three.js | 3D primitives & geometry |
-| React Icons | Icon library |
-| React Type Animation | Typing effect in hero |
-| React CountUp | Animated counters |
-| React Hot Toast | Toast notifications |
+| React 18 + Vite 5 | Framework & build tool |
+| Tailwind CSS 3 | Design tokens & utility styling |
+| Framer Motion | Reveals, staggers, transitions |
+| Lenis | Smooth inertia scrolling |
+| Canvas 2D | Signature neural-field hero visual |
+| React Icons · React CountUp · React Hot Toast | Icons, animated stats, toasts |
 
-## Installation & Setup
+> Three.js / React-Three-Fiber were removed — the hero's signature motion is a
+> lightweight Canvas 2D neural field, cutting ~266 KB gzipped from the bundle.
+
+## Sections
+
+1. **Hero** — name + "AI Engineer", rotating focus, neural field, CTAs, tech marquee
+2. **About** — background, specialization, bio, portrait, animated stats
+3. **Expertise** — six capability areas as an interactive accordion
+4. **Selected Work** — alternating project rows with generative visuals + detail modals
+5. **Experience** — roles timeline, education, and verified certifications
+6. **Contact** — big email CTA, social links, and a mailto quick-message form
+
+## Getting started
 
 ```bash
-# 1. Clone or navigate to the project
-cd ai-engineer-portfolio
-
-# 2. Install dependencies
 npm install
-
-# 3. Start development server
-npm run dev
-
-# 4. Open in browser
-# http://localhost:5173
+npm run dev        # http://localhost:5173/ai-engineer-portfolio/
 ```
 
-## Build for Production
+## Build
 
 ```bash
-npm run build
+npm run build      # outputs to /dist
 npm run preview
 ```
 
-## Customization
+## Content
 
-All editable content is in `/src/data/`:
+All content lives in `src/data/*.js` (`personal`, `projects`, `skills`,
+`experience`, `education`, `certifications`). Edit these to update the site —
+no component changes needed. Your profile photo is at `public/images/profile.png`.
 
-| File | Content |
-|------|---------|
-| `personal.js` | Name, bio, links, contact |
-| `skills.js` | Skill categories and proficiency |
-| `projects.js` | Project cards with descriptions |
-| `experience.js` | Work history timeline |
-| `education.js` | Education background |
-| `certifications.js` | Certificate cards |
-| `services.js` | Service offerings |
-| `achievements.js` | Stats counters |
-| `testimonials.js` | Client reviews |
-| `blog.js` | Article cards |
-
-## Adding Your Profile Photo
-
-Place your photo at: `public/images/profile.png`
-
-## Contact Form Setup (Optional)
-
-To enable real email sending, install EmailJS:
-
-```bash
-npm install @emailjs/browser
-```
-
-Then update `Contact.jsx` with your EmailJS service ID, template ID, and public key.
-
-## Project Structure
+## Structure
 
 ```
 src/
 ├── components/
-│   ├── 3d/          # Three.js / R3F canvas components
-│   ├── layout/      # Navbar, Footer, SectionWrapper
-│   ├── sections/    # All 12 page sections
-│   └── ui/          # Reusable Button, Card, Badge, SectionTitle
-├── data/            # All editable content
-├── hooks/           # useScrollAnimation, useMousePosition
-├── styles/          # globals.css, animations.css
-└── utils/           # constants.js, helpers.js
+│   ├── layout/      # Navbar, Cursor, Loader, ScrollProgress
+│   ├── providers/   # SmoothScroll (Lenis)
+│   ├── sections/    # Hero, About, Expertise, Projects, Experience, Contact
+│   ├── ui/          # motion helpers, SectionHeader
+│   └── visual/      # NeuralField (Canvas 2D)
+├── data/            # all editable content
+├── lib/             # scroll helpers
+└── index.css        # tokens, cursor, reduced-motion
 ```
+
+## Notes
+
+- Deployed as a GitHub Pages project site (`base: '/ai-engineer-portfolio/'` in `vite.config.js`).
+- The contact form opens the visitor's email client via `mailto:` — no backend or keys required.
 
 ---
 
-Built with AI, Data, and Passion by **Fady Atef Kamal**
+Built with React, Vite & Framer Motion by **Fady Atef Kamal**
