@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { personalInfo } from '../../data/personal'
 import { scrollToId, scrollToTop } from '../../lib/scroll'
+import { asset } from '../../lib/asset'
 import { Magnetic } from '../ui/motion'
 
 const LINKS = [
@@ -50,12 +51,15 @@ export default function Navbar() {
             onClick={scrollToTop}
             data-cursor="hover"
             className="group flex items-center gap-2.5"
-            aria-label="Back to top"
+            aria-label="Fady Atef Kamal — home"
           >
-            <span className="relative flex h-2.5 w-2.5">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60" />
-              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-accent" />
-            </span>
+            <img
+              src={asset('/logo-mark.png')}
+              alt="Fady Atef Kamal monogram"
+              width="28"
+              height="28"
+              className="h-7 w-7 object-contain transition-transform duration-300 ease-swift group-hover:scale-110"
+            />
             <span className="font-display text-[15px] font-semibold tracking-tight text-bone">
               Fady Atef
             </span>
