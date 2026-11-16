@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
+import { asset } from '../../lib/asset'
 
 /**
- * Brief, restrained intro ritual: a counter ticks to 100 while the name sits
- * centre-stage, then the panel lifts away. Short and skippable; under
- * reduced-motion it shows a single still frame and leaves immediately.
+ * Brief brand intro: the FAK monogram resolves into focus while a counter
+ * ticks to 100, then the panel lifts away. Short and non-blocking — the site
+ * is already mounted behind it. Under reduced-motion it shows a still frame
+ * and leaves almost immediately.
  */
 export default function Loader({ onDone }) {
   const reduce = useReducedMotion()
@@ -17,15 +19,14 @@ export default function Loader({ onDone }) {
       const t = setTimeout(() => {
         setShow(false)
         onDone?.()
-      }, 350)
+      }, 300)
       return () => clearTimeout(t)
     }
-    const total = 1150
+    const total = 1050
     const start = performance.now()
     let raf
     const tick = (now) => {
       const p = Math.min(1, (now - start) / total)
-      // easeOutExpo
       const eased = p === 1 ? 1 : 1 - Math.pow(2, -10 * p)
       setCount(Math.round(eased * 100))
       if (p < 1) raf = requestAnimationFrame(tick)
@@ -33,7 +34,7 @@ export default function Loader({ onDone }) {
         setTimeout(() => {
           setShow(false)
           onDone?.()
-        }, 260)
+        }, 220)
       }
     }
     raf = requestAnimationFrame(tick)
@@ -49,25 +50,20 @@ export default function Loader({ onDone }) {
           exit={reduce ? { opacity: 0 } : { y: '-100%' }}
           transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
         >
-          <div className="overflow-hidden">
-            <motion.p
-              className="display text-bone text-[12vw] sm:text-[72px] leading-none"
-              initial={reduce ? false : { y: '110%' }}
-              animate={{ y: 0 }}
-              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            >
-              Fady<span className="text-accent">.</span>
-            </motion.p>
-          </div>
-          <div className="mt-5 flex items-center gap-3">
+          <motion.img
+            src={asset('/logo-mark.png')}
+            alt="Fady Atef Kamal"
+            className="h-20 w-20 object-contain sm:h-24 sm:w-24"
+            initial={reduce ? false : { opacity: 0, scale: 0.6, rotate: -10, filter: 'blur(6px)' }}
+            animate={{ opacity: 1, scale: 1, rotate: 0, filter: 'blur(0px)' }}
+            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+          />
+          <div className="mt-6 flex items-center gap-3">
             <span className="u-label">Loading</span>
             <span className="font-mono text-[11px] tabular-nums text-bone">{count}</span>
           </div>
           <div className="mt-4 h-px w-40 overflow-hidden bg-line">
-            <motion.div
-              className="h-full bg-accent"
-              style={{ width: `${count}%` }}
-            />
+            <motion.div className="h-full bg-accent" style={{ width: `${count}%` }} />
           </div>
         </motion.div>
       )}

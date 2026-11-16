@@ -156,9 +156,16 @@ function Footer() {
   return (
     <footer className="shell mt-24 border-t border-line py-10">
       <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
-        <div>
-          <p className="font-display text-lg text-bone">Fady Atef Kamal</p>
-          <p className="mt-1 text-[12px] text-bone-faint">AI Engineer · {personalInfo.location}</p>
+        <div className="flex items-center gap-3">
+          <img
+            src={asset('/logo-mark.png')}
+            alt="Fady Atef Kamal monogram"
+            className="h-8 w-8 shrink-0 object-contain opacity-90"
+          />
+          <div>
+            <p className="font-display text-lg text-bone">Fady Atef Kamal</p>
+            <p className="mt-1 text-[12px] text-bone-faint">AI Engineer · {personalInfo.location}</p>
+          </div>
         </div>
         <p className="font-mono text-[11px] text-bone-faint">
           © {new Date().getFullYear()} — Built with React, Vite &amp; Framer Motion
