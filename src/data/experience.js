@@ -4,7 +4,7 @@ export const experiences = [
     role: 'AI Engineer (Practical Training)',
     company: 'INZOX',
     type: 'Practical Training',
-    period: '2025 – Present',
+    period: '2026 – Present',
     location: 'Remote',
     description: `Joined INZOX's existing AI product team as an AI Engineer, shipping production features to
     a live CV-generation SaaS (maker.cv) using agentic AI patterns and Clean Architecture within a
