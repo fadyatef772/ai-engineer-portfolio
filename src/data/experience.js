@@ -1,5 +1,25 @@
 export const experiences = [
   {
+    id: 6,
+    role: 'AI Engineer (Practical Training)',
+    company: 'INZOX',
+    type: 'Practical Training',
+    period: '2025 – Present',
+    location: 'Remote',
+    description: `Joined INZOX's existing AI product team as an AI Engineer, shipping production features to
+    a live CV-generation SaaS (maker.cv) using agentic AI patterns and Clean Architecture within a
+    Jenkins CI/CD pipeline.`,
+    responsibilities: [
+      'Contributed production features to a live AI CV-generation SaaS using agentic AI patterns',
+      "Followed Clean Architecture and the team's existing conventions and agentic patterns",
+      'Shipped through full CI/CD (Jenkins) — auto-deploy on push to main → staging',
+      'Maintained strict deploy discipline with zero regressions across staging and production',
+    ],
+    tech: ['Python', 'FastAPI', 'React', 'TypeScript', 'PostgreSQL', 'Docker', 'Kubernetes', 'Jenkins', 'Clean Architecture'],
+    color: '#6b80ff',
+    icon: 'ai',
+  },
+  {
     id: 1,
     role: 'Data Analyst (Internship)',
     company: 'Velir',
@@ -16,25 +36,6 @@ export const experiences = [
     ],
     tech: ['Python', 'Data Intelligence', 'Decision Sciences', 'Analytical Thinking'],
     color: '#00d4ff',
-    icon: 'data',
-  },
-  {
-    id: 2,
-    role: 'Data Analyst (Internship)',
-    company: 'IBM',
-    type: 'Internship',
-    period: 'Jun 2024 – Aug 2024',
-    location: 'Hybrid — Egypt',
-    description: `Conducted exploratory data analysis on large-scale datasets and developed Power BI dashboards
-    to uncover trends and validate data integrity for one of the world's leading technology companies.`,
-    responsibilities: [
-      'Conducted EDA on large-scale datasets using SQL and Python',
-      'Developed dashboards in Power BI for data visualization and reporting',
-      'Performed statistical analysis to uncover trends and validate data integrity',
-      'Collaborated with cross-functional teams on data-driven reporting workflows',
-    ],
-    tech: ['Python', 'SQL', 'Power BI', 'Statistical Analysis', 'EDA'],
-    color: '#0f62fe',
     icon: 'data',
   },
   {
