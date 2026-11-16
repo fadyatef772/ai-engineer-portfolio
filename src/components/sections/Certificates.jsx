@@ -11,7 +11,11 @@ const N = certificates.length
 const ANGLE = 360 / N
 const RADIUS = 540 // spiral radius (px)
 const Y_SPREAD = 230 // vertical travel across the helix (px)
-const AUTO_SPEED = 0.06 // deg per frame
+const AUTO_VEL = 0.06 // baseline auto-rotation (deg per frame)
+const DRAG_SENS = 0.3 // deg per px of pointer drag
+const WHEEL_SENS = 0.018 // deg per px of horizontal wheel / trackpad delta
+const MAX_VEL = 7 // cap on rotational velocity (deg per frame)
+const DAMP = 0.92 // inertia decay per frame
 
 export default function Certificates() {
   const reduce = useReducedMotion()
@@ -21,8 +25,9 @@ export default function Certificates() {
   const [scale, setScale] = useState(1)
 
   useEffect(() => {
-    const small = window.matchMedia('(max-width: 767px)').matches
-    if (reduce || small) setMode('list')
+    // Spiral is the default on every screen size, mobile included; only
+    // reduced-motion users start in the static list view.
+    if (reduce) setMode('list')
     const onResize = () => {
       const w = window.innerWidth
       setScale(w >= 1024 ? 1 : w >= 768 ? 0.8 : 0.58)
@@ -39,6 +44,7 @@ export default function Certificates() {
   const worldRef = useRef(null)
   const cardRefs = useRef([])
   const rotation = useRef(0)
+  const velocity = useRef(0) // rotational velocity — carries inertia across inputs
   const tiltX = useRef(0)
   const tiltY = useRef(0)
   const targetTiltX = useRef(0)
@@ -74,8 +80,17 @@ export default function Certificates() {
     applyAll()
     if (reduce) return
     const loop = () => {
-      const idle = performance.now() - lastInteract.current > 1400
-      if (!dragging.current && hoveredRef.current === null && idle) rotation.current += AUTO_SPEED
+      // One shared rotation system for drag, swipe and wheel: advance by the
+      // current velocity, decay it (inertia), and ease back into a subtle
+      // auto-spin once the user has been idle.
+      if (!dragging.current) {
+        rotation.current += velocity.current
+        velocity.current *= DAMP
+        const idle = performance.now() - lastInteract.current > 1200
+        if (idle && hoveredRef.current === null && Math.abs(velocity.current) < AUTO_VEL) {
+          velocity.current += (AUTO_VEL - velocity.current) * 0.03
+        }
+      }
       tiltX.current += (targetTiltX.current - tiltX.current) * 0.06
       tiltY.current += (targetTiltY.current - tiltY.current) * 0.06
       applyAll()
@@ -99,9 +114,13 @@ export default function Certificates() {
       targetTiltY.current = Math.max(-1, Math.min(1, nx)) * 5
       if (reduce) applyAll()
     }
+    const clampV = (v) => Math.max(-MAX_VEL, Math.min(MAX_VEL, v))
+
+    // Drag (mouse) and one-finger swipe (touch) share this path via Pointer Events.
     const onDown = (e) => {
       dragging.current = true
       moved.current = 0
+      velocity.current = 0 // stop any coast on grab
       lastX.current = e.clientX ?? 0
       lastInteract.current = performance.now()
     }
@@ -111,7 +130,9 @@ export default function Certificates() {
       const dx = x - lastX.current
       lastX.current = x
       moved.current += Math.abs(dx)
-      rotation.current += dx * 0.3
+      rotation.current += dx * DRAG_SENS
+      // Smooth the release velocity so a flick coasts naturally.
+      velocity.current = clampV(velocity.current * 0.5 + dx * DRAG_SENS * 0.5)
       lastInteract.current = performance.now()
       if (reduce) applyAll()
     }
@@ -119,13 +140,34 @@ export default function Certificates() {
       dragging.current = false
       lastInteract.current = performance.now()
     }
+
+    // Laptop touchpad (and mouse wheel): a primarily HORIZONTAL gesture rotates
+    // the spiral; a vertical gesture is left alone so the page scrolls normally.
+    const onWheel = (e) => {
+      const absX = Math.abs(e.deltaX)
+      const absY = Math.abs(e.deltaY)
+      if (absX <= absY || absX < 0.5) return // vertical / negligible → do not hijack scroll
+      e.preventDefault() // we are intentionally taking this horizontal gesture
+      const unit = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? window.innerHeight : 1 // lines/pages → px
+      const delta = e.deltaX * unit * WHEEL_SENS
+      if (reduce) {
+        rotation.current += delta
+        applyAll()
+      } else {
+        velocity.current = clampV(velocity.current + delta)
+      }
+      lastInteract.current = performance.now()
+    }
+
     stage.addEventListener('pointermove', onParallax)
     stage.addEventListener('pointerdown', onDown)
+    stage.addEventListener('wheel', onWheel, { passive: false })
     window.addEventListener('pointermove', onMove)
     window.addEventListener('pointerup', onUp)
     return () => {
       stage.removeEventListener('pointermove', onParallax)
       stage.removeEventListener('pointerdown', onDown)
+      stage.removeEventListener('wheel', onWheel)
       window.removeEventListener('pointermove', onMove)
       window.removeEventListener('pointerup', onUp)
     }
@@ -214,7 +256,7 @@ export default function Certificates() {
               </div>
             </div>
             <p className="mt-4 text-center font-mono text-[11px] uppercase tracking-[0.18em] text-bone-faint">
-              Drag to rotate · hover to focus · click to open
+              Drag, swipe or scroll sideways to rotate · click to open
             </p>
           </motion.div>
         ) : (
