@@ -4,46 +4,57 @@ import SectionHeader from '../ui/SectionHeader'
 import { Reveal } from '../ui/motion'
 
 /**
- * The six capability areas requested in the brief, populated strictly from
- * technologies evidenced in Fady's existing skills/projects data — nothing
- * invented, no fabricated proficiency numbers.
+ * Capability areas mirror Fady's CV "Technical Skills" grouping — every tag is
+ * a skill he lists, nothing invented and no fabricated proficiency numbers.
  */
 const AREAS = [
   {
-    id: 'aiml',
-    title: 'AI & Machine Learning',
-    blurb: 'Supervised & unsupervised modelling, from clean data to a tuned, explainable model.',
-    tags: ['Scikit-learn', 'TensorFlow', 'PyTorch', 'XGBoost', 'LightGBM', 'ANN / MLP', 'Classification', 'Regression', 'SHAP Explainability'],
+    id: 'llm',
+    title: 'LLM & Generative AI',
+    blurb: 'Building with LLMs end to end — RAG, agentic workflows, fine-tuning and vector search.',
+    tags: ['LLMs', 'RAG', 'LangChain', 'LangGraph', 'Dify', 'Agentic Workflows', 'Prompt Engineering', 'Retrieval Strategy Optimization', 'Vector Search (pgvector)', 'LLM Fine-Tuning (BERT 8-class)', 'OpenRouter API', 'Hugging Face Transformers', 'Vertex AI (Gemini, Imagen 3, VTO)', 'PoC Development'],
   },
   {
-    id: 'genai',
-    title: 'Generative AI & LLMs',
-    blurb: 'Working with transformer models and language models for text understanding and generation.',
-    tags: ['Transformers', 'BERT / GPT', 'Hugging Face', 'OpenAI', 'Fine-tuning', 'Embeddings'],
+    id: 'infra',
+    title: 'AI Infrastructure & DevOps',
+    blurb: 'Shipping and running AI in production — containers, CI/CD and cloud.',
+    tags: ['Docker', 'Kubernetes (K8s)', 'CI/CD (GitHub Actions, Jenkins)', 'Google Cloud Platform', 'Cloud Run', 'Cloud Build', 'Vercel', 'Hugging Face Spaces', 'Production Monitoring', 'Model Deployment', 'Clean Architecture', 'Environment Management', 'Security Auditing'],
   },
   {
-    id: 'cv',
-    title: 'Computer Vision',
-    blurb: 'Convolutional architectures for image understanding and visual feature extraction.',
-    tags: ['CNN Architectures', 'Image Classification', 'Visual Feature Extraction'],
+    id: 'api',
+    title: 'AI Integration & API Development',
+    blurb: 'Serving models and tools through clean, typed, real-time APIs.',
+    tags: ['FastAPI', 'REST API Design', 'WebSocket', 'SSE', 'Tool & API Integration', 'Internal System Connectivity', 'Pydantic v2', 'asyncpg', 'Dependency Injection', 'Protocol-Based Interfaces'],
+  },
+  {
+    id: 'ml',
+    title: 'Machine Learning & Deep Learning',
+    blurb: 'Classical ML, ensembles, neural nets and computer vision — rigorously evaluated.',
+    tags: ['Supervised & Unsupervised Learning', 'Ensemble Methods (CatBoost, AdaBoost, Gradient Boosting)', 'SMOTE', 'Neural Networks', 'BERT', 'PyTorch', 'TensorFlow', 'Computer Vision (YOLOv8, FaceNet, U-Net)', 'scikit-learn', 'Model Evaluation (F1, ROC/AUC, RMSE)'],
   },
   {
     id: 'nlp',
     title: 'Natural Language Processing',
-    blurb: 'A core strength — multilingual text AI with a focus on the hard parts of Arabic.',
-    tags: ['Arabic NLP', 'Sentiment Analysis', 'Sarcasm Detection', 'Text Preprocessing', 'NLTK', 'spaCy', 'PyArabic'],
+    blurb: 'Multilingual text AI with deep Arabic support.',
+    tags: ['Text Preprocessing', 'NLTK', 'Arabic RTL Pipelines', 'Bilingual NLP (Arabic + English)', 'Negation-Safe Stopword Removal', 'ISRI Stemming', 'Sentiment Analysis'],
   },
   {
-    id: 'ds',
-    title: 'Data Science & Analytics',
-    blurb: 'The full analytical pipeline — EDA, statistics, and the dashboards that communicate it.',
-    tags: ['Pandas', 'NumPy', 'EDA & Feature Engineering', 'Statistical Analysis', 'Power BI', 'Tableau', 'Plotly', 'Matplotlib', 'Seaborn'],
+    id: 'databases',
+    title: 'Databases',
+    blurb: 'Relational, vector and multi-tenant data done right.',
+    tags: ['PostgreSQL', 'Supabase (RLS, pgvector)', 'MySQL', 'SQL Server', 'Connection Pooling', 'Star Schema', 'Data Warehouse', 'Row-Level Security', 'Multi-Tenant Architecture'],
   },
   {
-    id: 'backend',
-    title: 'Backend & Deployment',
-    blurb: 'Serving models as production APIs, containerised and version-controlled.',
-    tags: ['FastAPI', 'Flask', 'REST APIs', 'Swagger / OpenAPI', 'Docker', 'Git & GitHub', 'Linux', 'SQL · PostgreSQL · MongoDB'],
+    id: 'data-bi',
+    title: 'Data & BI',
+    blurb: 'From EDA and feature engineering to dashboards that decide.',
+    tags: ['Python (Pandas, NumPy)', 'EDA', 'Feature Engineering', 'Power BI (DAX, Star Schema)', 'Tableau', 'Matplotlib', 'Seaborn', 'Plotly', 'Streamlit', 'SQL (T-SQL, Window Functions, CTEs)'],
+  },
+  {
+    id: 'tools',
+    title: 'Tools',
+    blurb: 'The day-to-day toolchain.',
+    tags: ['Git / GitHub (Git Flow)', 'Docker Compose', 'Jupyter Notebook', 'Playwright', 'Tavily API', 'Excel (Advanced)', 'WordPress', 'Google Apps Script'],
   },
 ]
 
@@ -103,7 +114,7 @@ function Row({ area, index, open, onToggle }) {
 }
 
 export default function Expertise() {
-  const [open, setOpen] = useState('aiml')
+  const [open, setOpen] = useState('llm')
 
   return (
     <section id="expertise" className="shell scroll-mt-24 py-24 sm:py-32">
@@ -111,7 +122,7 @@ export default function Expertise() {
         index="02"
         title="Expertise"
         kicker="What I work with"
-        aside="Six areas, one through-line: taking a model from a notebook to something deployed and dependable."
+        aside="The full stack of building and shipping AI — from LLM systems and agents to production infrastructure."
       />
       <Reveal>
         <div className="border-t border-line">
